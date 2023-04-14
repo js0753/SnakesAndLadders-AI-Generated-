@@ -20,6 +20,14 @@
             font-family: sans-serif;
             font-size: 12px;
         }
+        .bold-red {
+            font-weight: bold;
+            fill: red;
+        }
+        .bold-blue {
+            font-weight: bold;
+            fill: blue;
+        }
     </style>
 </head>
 <body>
@@ -71,17 +79,39 @@
             .attr("y", d => (size - Math.floor(d / size) - 1) * cellSize + cellSize / 2)
             .attr("dx", "-.35em")  // Adjust text position horizontally
             .attr("dy", ".35em")   // Adjust text position vertically
+            .attr("class", d => {
+                if (d === snake1Tail || d === snake1Head || d === snake2Tail || d === snake2Head) {
+                    return "bold-red";
+                }
+                if (d === ladder1Start || d === ladder1End || d === ladder2Start || d === ladder2End) {
+                    return "bold-blue";
+                }
+            })
             .text(d => {
                 if (d === snake1Tail) return "ST1";
-                if (d === snake1Head) return "SH1";
-                if (d === snake2Tail) return "ST2";
-                if (d === snake2Head) return "SH2";
-                if (d === ladder1Start) return "LS1";
-                if (d === ladder1End) return "LE1";
-                if (d === ladder2Start) return "LS2";
-                if (d === ladder2End) return "LE2";
-                return d;
-            });
-    </script>
+                if (d ===snake1Head) return "SH1";
+if (d === snake2Tail) return "ST2";
+if (d === snake2Head) return "SH2";
+if (d === ladder1Start) return "LS1";
+if (d === ladder1End) return "LE1";
+if (d === ladder2Start) return "LS2";
+if (d === ladder2End) return "LE2";
+return d;
+})
+.style("font-weight", d => {
+if (d === snake1Tail || d === snake1Head || d === snake2Tail || d === snake2Head ||
+d === ladder1Start || d === ladder1End || d === ladder2Start || d === ladder2End) {
+return "bold";
+}
+})
+.style("fill", d => {
+if (d === snake1Tail || d === snake1Head || d === snake2Tail || d === snake2Head) {
+return "red";
+} else if (d === ladder1Start || d === ladder1End || d === ladder2Start || d === ladder2End) {
+return "blue";
+}
+});
+</script>
+
 </body>
 </html>
