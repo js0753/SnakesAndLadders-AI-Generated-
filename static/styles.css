@@ -1,65 +1,107 @@
-/* Game board styles */
+body {
+  background-color: #fff;
+  color: #333;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+}
+
 #game-board {
-  border: 2px solid black;
-  display: inline-block;
-  padding: 20px;
-  margin: 20px;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
 }
 
 .row {
-  clear: both;
+  display: flex;
+  flex-direction: row;
 }
 
 .square {
-  border: 1px solid black;
-  height: 50px;
-  width: 50px;
-  float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  background-color: #fff;
+  border: 2px solid #333;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
   position: relative;
 }
 
-/* Player piece styles */
-.player-piece {
-  background-color: green;
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
+.square[data-ladder-start],
+.square[data-ladder-end],
+.square[data-snake-head],
+.square[data-snake-tail] {
+  position: relative;
+}
+
+.square[data-ladder-start]::before,
+.square[data-ladder-end]::after,
+.square[data-snake-head]::before,
+.square[data-snake-tail]::after {
+  content: "";
+  display: block;
   position: absolute;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+
+.square[data-ladder-start]::before {
+  background-color: blue;
   top: 10px;
   left: 10px;
-  z-index: 3;
 }
 
-/* Snake and ladder styles */
-.snake-head, .snake-tail {
-  background-color: red;
-  height: 5px;
-  width: 30px;
-  position: absolute;
-  z-index: 2;
-}
-
-.snake-head {
-  border-radius: 50% 50% 0 0;
-}
-
-.snake-tail {
-  border-radius: 0 0 50% 50%;
-}
-
-.ladder-start, .ladder-end {
+.square[data-ladder-end]::after {
   background-color: blue;
-  height: 30px;
-  width: 5px;
+  bottom: 10px;
+  right: 10px;
+}
+
+.square[data-snake-head]::before {
+  background-color: red;
+  top: 10px;
+  left: 10px;
+}
+
+.square[data-snake-tail]::after {
+  background-color: red;
+  bottom: 10px;
+  right: 10px;
+}
+
+.square.ladder-line::before {
+  content: "";
+  display: block;
   position: absolute;
-  z-index: 2;
+  border: 2px solid blue;
+  width: 60px;
+  height: 10px;
+  top: 25px;
+  left: 0;
 }
 
-.ladder-start {
-  border-radius: 50% 0 0 50%;
-}
-
-.ladder-end {
-  border-radius: 0 50% 50% 0;
+.square.snake-line::before {
+  content: "";
+  display: block;
+  position: absolute;
+  border: 2px solid red;
+  width: 60px;
+  height: 10px;
+  top: 25px;
+  left: 0;
 }
