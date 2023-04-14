@@ -20,6 +20,7 @@ h1 {
   justify-content: center;
   align-items: center;
   margin-top: 50px;
+  position: relative; /* add position:relative to the game-board container */
 }
 
 .row {
@@ -105,3 +106,59 @@ h1 {
   top: 25px;
   left: 0;
 }
+
+
+#square-44:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: calc(100% - 40px);
+  height: 4px;
+  background-color: blue;
+  transform: translateY(-50%);
+  z-index: -1;
+}
+
+#square-64:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: calc(100% - 40px);
+  height: 4px;
+  background-color: blue;
+  transform: translateY(-50%);
+  z-index: -1;
+}
+
+.ladder-line {
+  position: absolute;
+  border: 2px solid blue;
+  z-index: 10; /* add a higher value /
+  top: calc(50% - 1px); / align to the center of the square */
+  }
+  
+  #square-44:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: calc(100% - 20px);
+  height: 4px;
+  background-color: blue;
+  transform: translateY(-50%);
+  z-index: 10;
+  }
+  
+  #square-64:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: calc(100% - 20px);
+  height: 4px;
+  background-color: blue;
+  transform: translateY(-50%);
+  z-index: 10;
+  }

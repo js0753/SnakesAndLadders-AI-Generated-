@@ -1,100 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Snakes and Ladders</title>
-	<link rel="stylesheet" type="text/css" href="/static/styles.css">
+    <meta charset="UTF-8">
+    <title>Snakes and Ladders</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+        body {
+            background-color: white;
+        }
+        svg {
+            border: 1px solid black;
+        }
+        .cell {
+            fill: none;
+            stroke: black;
+            stroke-width: 1;
+        }
+        .cell-id {
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
-	<h1>Snakes and Ladders</h1>
-	<div class="game-board">
-		<div class="row">
-			<div class="square" id="square-64" data-ladder-end="44"></div>
-			<div class="square" id="square-63"></div>
-			<div class="square" id="square-62"></div>
-			<div class="square" id="square-61"></div>
-			<div class="square" id="square-60"></div>
-			<div class="square" id="square-59"></div>
-			<div class="square" id="square-58" data-ladder-start="42"></div>
-			<div class="square" id="square-57"></div>
-		</div>
-		<div class="row">
-			<div class="square" id="square-49"></div>
-			<div class="square" id="square-50"></div>
-			<div class="square" id="square-51"></div>
-			<div class="square" id="square-52"></div>
-			<div class="square" id="square-53"></div>
-			<div class="square" id="square-54" data-snake-tail="15"></div>
-			<div class="square" id="square-55"></div>
-			<div class="square" id="square-56"></div>
-		</div>
-		<div class="row">
-			<div class="square" id="square-48"></div>
-			<div class="square" id="square-47"></div>
-			<div class="square" id="square-46"></div>
-			<div class="square" id="square-45"></div>
-			<div class="square" id="square-44" data-ladder-start="64"></div>
-			<div class="square" id="square-43"></div>
-			<div class="square" id="square-42"></div>
-			<div class="square" id="square-41" data-snake-head="24"></div>
-		</div>
-		<div class="row">
-			<div class="square" id="square-40" data-ladder-end="6"></div>
-			<div class="square" id="square-39"></div>
-			<div class="square" id="square-38"></div>
-			<div class="square" id="square-37"></div>
-			<div class="square" id="square-36"></div>
-			<div class="square" id="square-35"></div>
-			<div class="square" id="square-34"></div>
-			<div class="square" id="square-33"></div>
-		</div>
-		<div class="row">
-			<div class="square" id="square-25"></div>
-			<div class="square" id="square-26" data-ladder-end="3"></div>
-			<div class="square" id="square-27"></div>
-			<div class="square" id="square-28"></div>
-			<div class="square" id="square-29"></div>
-			<div class="square" id="square-30" data-snake-head="11"></div>
-			<div class="square" id="square-31"></div>
-			<div class="square" id="square-32"></div>
-		</div>
-		<div class="row">
-			<div class="square" id="square-24"></div>
-			<div class="square" id="square-23"></div>
-			<div class="square" id="square-22"></div>
-			<div class="square" id="square-21"></div>
-			<div class="square" id="square-20"></div>
-			<div class="square" id="square-19"></div>
-			<div class="square" id="square-18"></div>
-			<div class="square" id="square-17"></div>
-		</div>
-		<div class="row">
-			<div class="square" id="square-9"></div>
-			<div class="square" id="square-10"></div>
-			<div class="square" id="square-11 ladder-end ladder-line" data-ladder-start="23">
-				<div class="circle blue"></div>
-			</div>
-			<div class="square" id="square-12"></div>
-			<div class="square" id="square-13"></div>
-			<div class="square" id="square-14"></div>
-			<div class="square" id="square-15 snake-head snake-line" data-snake-tail="7">
-				<div class="circle red"></div>
-			</div>
-			<div class="square" id="square-16"></div>
-		</div>
-		<div class="row">
-			<div class="square" id="square-8"></div>
-			<div class="square" id="square-7"></div>
-			<div class="square" id="square-6"></div>
-			<div class="square" id="square-5 snake-tail snake-line" data-snake-head="2">
-				<div class="circle red"></div>
-			</div>
-			<div class="square" id="square-4"></div>
-			<div class="square" id="square-3"></div>
-			<div class="square" id="square-2 snake-head snake-line" data-snake-tail="5">
-				<div class="circle red"></div>
-			</div>
-			<div class="square" id="square-1"></div>
-		</div>
-	</div>
+    <script>
+        const size = 8;
+        const cellSize = 50;
+        const gridSize = size * cellSize;
+
+        const snake1Tail = 2;
+        const snake1Head = 27;
+        const snake2Tail = 23;
+        const snake2Head = 58;
+
+        const ladder1Start = 12;
+        const ladder1End = 29;
+        const ladder2Start = 35;
+        const ladder2End = 53;
+
+        const svg = d3.select("body")
+            .append("svg")
+            .attr("width", gridSize)
+            .attr("height", gridSize)
+            .attr("style", "background-color: white");
+
+        svg.selectAll(".row")
+            .data(d3.range(size))
+            .enter().append("g")
+            .attr("class", "row")
+            .attr("transform", (d, i) => `translate(0,${(size - i - 1) * cellSize})`)
+            .selectAll(".cell")
+            .data(d3.range(size))
+            .enter().append("rect")
+            .attr("class", "cell")
+            .attr("x", (d, i) => i * cellSize)
+            .attr("y", 0)
+            .attr("width", cellSize)
+            .attr("height", cellSize);
+
+        svg.selectAll(".cell-id")
+            .data(d3.range(size * size))
+            .enter().append("text")
+            .attr("class", "cell-id")
+            .attr("x", d => {
+                const col = d % size;
+                const row = Math.floor(d / size);
+                const isEvenRow = row % 2 === 0;
+                return isEvenRow ? col * cellSize + cellSize / 2 : (size - col - 1) * cellSize + cellSize / 2;
+            })
+            .attr("y", d => (size - Math.floor(d / size) - 1) * cellSize + cellSize / 2)
+            .attr("dx", "-.35em")  // Adjust text position horizontally
+            .attr("dy", ".35em")   // Adjust text position vertically
+            .text(d => {
+                if (d === snake1Tail) return "ST1";
+                if (d === snake1Head) return "SH1";
+                if (d === snake2Tail) return "ST2";
+                if (d === snake2Head) return "SH2";
+                if (d === ladder1Start) return "LS1";
+                if (d === ladder1End) return "LE1";
+                if (d === ladder2Start) return "LS2";
+                if (d === ladder2End) return "LE2";
+                return d;
+            });
+    </script>
 </body>
 </html>
